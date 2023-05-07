@@ -1,7 +1,7 @@
 package es.ceu.gisi.modcomp.cyk_algorithm.algorithm;
-
 import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions.CYKAlgorithmException;
 import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.interfaces.CYKAlgorithmInterface;
+import java.util.ArrayList;
 
 /**
  * Esta clase contiene la implementación de la interfaz CYKAlgorithmInterface
@@ -11,6 +11,8 @@ import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.interfaces.CYKAlgorithmInterf
  * @author Sergio Saugar García <sergio.saugargarcia@ceu.es>
  */
 public class CYKAlgorithm implements CYKAlgorithmInterface {
+    ArrayList<Character> nonTerminals = new ArrayList<Character>();
+    ArrayList<Character> Terminals = new ArrayList<Character>();
 
     @Override
     /**
@@ -20,7 +22,10 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * @throws CYKAlgorithmException Si el elemento no es una letra mayúscula.
      */
     public void addNonTerminal(char nonterminal) throws CYKAlgorithmException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!Character.isUpperCase(nonterminal)|| nonTerminals.contains(nonterminal)) {
+            throw new CYKAlgorithmException();
+        }
+        this.nonTerminals.add(nonterminal);
     }
 
     @Override
@@ -31,7 +36,11 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * @throws CYKAlgorithmException Si el elemento no es una letra minúscula.
      */
     public void addTerminal(char terminal) throws CYKAlgorithmException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(!Character.isLowerCase(terminal)|| Terminals.contains(terminal)){
+            throw new CYKAlgorithmException();
+        }else{
+            Terminals.add(terminal);
+        }
     }
 
     @Override
