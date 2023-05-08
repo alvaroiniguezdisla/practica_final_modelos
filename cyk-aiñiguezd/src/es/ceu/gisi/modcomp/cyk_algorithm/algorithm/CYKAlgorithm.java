@@ -2,6 +2,8 @@ package es.ceu.gisi.modcomp.cyk_algorithm.algorithm;
 import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.exceptions.CYKAlgorithmException;
 import es.ceu.gisi.modcomp.cyk_algorithm.algorithm.interfaces.CYKAlgorithmInterface;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Esta clase contiene la implementación de la interfaz CYKAlgorithmInterface
@@ -14,7 +16,7 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
     ArrayList<Character> nonTerminals = new ArrayList<Character>();
     ArrayList<Character> Terminals = new ArrayList<Character>();
     char axioma;
-    Map<character,String> producciones= new HashMap<character,String>();
+    Map<Character,String> producciones= new HashMap<Character,String>();
 
     @Override
     /**
@@ -114,6 +116,7 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * gramática es vacía o si el autómata carece de axioma.
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
+
 
     }
 
