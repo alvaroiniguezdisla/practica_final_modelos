@@ -116,6 +116,23 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * gramática es vacía o si el autómata carece de axioma.
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
+        //comprobamos que todos los elementos de la palabra word pertenecen al conjunto de los terminales
+        for(int i=0;i<word.length();i++){
+            if(!Terminals.contains(word.charAt(i))){
+                throw new CYKAlgorithmException();
+            }
+        }
+        //comprobamos que la gramatica no es vacia
+        if(nonTerminals.isEmpty()){
+            throw new CYKAlgorithmException();
+        }
+        //comprobamos que el automata tiene axioma
+        if(axioma=='\u0000'){
+            throw new CYKAlgorithmException();
+        }
+
+
+        return true;
 
 
     }
