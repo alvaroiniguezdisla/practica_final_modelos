@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class CYKAlgorithm implements CYKAlgorithmInterface {
     ArrayList<Character> nonTerminals = new ArrayList<Character>();
     ArrayList<Character> Terminals = new ArrayList<Character>();
+    char axioma;
+    Map<character,String> producciones= new HashMap<character,String>();
 
     @Override
     /**
@@ -25,7 +27,7 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
         if (!Character.isUpperCase(nonterminal)|| nonTerminals.contains(nonterminal)) {
             throw new CYKAlgorithmException();
         }
-        this.nonTerminals.add(nonterminal);
+        nonTerminals.add(nonterminal);
     }
 
     @Override
@@ -53,7 +55,11 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * conjunto de elementos no terminales.
      */
     public void setStartSymbol(char nonterminal) throws CYKAlgorithmException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(!nonTerminals.contains(nonterminal)){
+            throw new CYKAlgorithmException();
+        }
+        axioma=nonterminal;
+
     }
 
     @Override
@@ -68,7 +74,30 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * previamente.
      */
     public void addProduction(char nonterminal, String production) throws CYKAlgorithmException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //comprobamos que el no terminal esta en el arraylist de los no terminales
+        if(!nonTerminals.contains(nonterminal)){
+            throw new CYKAlgorithmException();
+        }
+        //comprobamos que la produccion es de tamaño 1 o 2
+        if(production.length()>2||production.length()<1){
+            throw new CYKAlgorithmException();
+        }
+        //comprobamos que la produccion se ajusta a FNC
+        if(production.length()==1){
+            if(!Terminals.contains(production.charAt(0))){
+                throw new CYKAlgorithmException();
+            }
+        }
+        if(production.length()==2){
+            if(!nonTerminals.contains(production.charAt(0))||!nonTerminals.contains(production.charAt(1))){
+                throw new CYKAlgorithmException();
+            }
+        }
+        //si pasa todas las condiciones de este metodo se añade la produccion
+        producciones.put(nonterminal,production);
+
+
+
     }
 
     @Override
@@ -85,7 +114,7 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * gramática es vacía o si el autómata carece de axioma.
      */
     public boolean isDerived(String word) throws CYKAlgorithmException {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     @Override
