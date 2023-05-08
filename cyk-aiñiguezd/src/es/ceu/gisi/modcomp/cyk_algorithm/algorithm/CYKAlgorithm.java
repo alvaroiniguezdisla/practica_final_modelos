@@ -101,6 +101,35 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
 
 
     }
+    //creamos un metodo para que nos cree la matriz
+    public String[][] crearMatriz(String word){
+        //creamos la matriz
+        int n=word.length();
+        String[][] matriz= new String[n][n];
+        //rellenamos la matriz
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                matriz[i][j]="";
+            }
+        }
+        //rellenamos la diagonal
+        for(int i=0;i<n;i++){
+            matriz[i][i]=Character.toString(word.charAt(i));
+        }
+        //rellenamos la matriz
+        for(int i=1;i<n;i++){
+            for(int j=0;j<n-i;j++){
+                for(int k=0;k<i;k++){
+                    for(int l=0;l<producciones.get(axioma).length();l++){
+                        if(matriz[j][j+k].contains(Character.toString(producciones.get(axioma).charAt(l)))){
+                            matriz[j][j+i]+=producciones.get(axioma).charAt(0);
+                        }
+                    }
+                }
+            }
+        }
+        return matriz;
+    }
 
     @Override
     /**
@@ -131,8 +160,14 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
             throw new CYKAlgorithmException();
         }
 
+        //comprobamos si la palabra pertenece al lenguaje generado por la gramatica llamando al metodo crearMatriz
+        crearMatriz(word);
+        if(crearMatriz(word)[0][word.length()-1].contains(Character.toString(axioma))){
+            return true;
+        }
 
-        return true;
+        return false;
+
 
 
     }
@@ -154,7 +189,32 @@ public class CYKAlgorithm implements CYKAlgorithmInterface {
      * gramática es vacía o si el autómata carece de axioma.
      */
     public String algorithmStateToString(String word) throws CYKAlgorithmException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //comprbamos que word esta formada solo por terminales que pertenecen al conjunto de terminales
+        for(int i=0;i<word.length();i++){
+            if(!Terminals.contains(word.charAt(i))){
+                throw new CYKAlgorithmException();
+            }
+        }
+        //comprobamos que la gramatica no es vacia
+        if(nonTerminals.isEmpty()){
+            throw new CYKAlgorithmException();
+        }
+        //comprobamos que el automata tiene axioma
+        if(axioma=='\u0000'){
+            throw new CYKAlgorithmException();
+        }
+        //llamamos al metodo crearMatriz para que nos cree la matriz de la palabra word
+        crearMatriz(word);
+        String matriz="";
+        //rellenamos el string con la matriz
+        for(int i=0;i<word.length();i++){
+            for(int j=0;j<word.length();j++){
+                matriz+=crearMatriz(word)[i][j];
+            }
+            matriz+="\n";
+        }
+        return matriz;
+
     }
 
     @Override
